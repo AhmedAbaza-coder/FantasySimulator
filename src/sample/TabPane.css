@@ -1,0 +1,83 @@
+.tab-pane {
+    -fx-tab-min-width: 58px; /* 55 */
+    -fx-tab-max-width: 58px; /* 55 */
+    -fx-tab-min-height: 240px; /* 24 */
+    -fx-tab-max-height: 240px; /* 24 */
+    -fx-background-color: #141313;
+
+}
+
+.jfx-rippler {
+    -fx-min-width: 70px;
+    -jfx-rippler-fill: #5A1155;
+}
+
+.tab-container {
+    -fx-alignment: center-left;
+}
+
+
+.tab-label {
+    -fx-min-width: 70;
+    /*-fx-text-alignment: left;*/
+
+
+}
+
+.tab {
+
+    -fx-text-fill: White;
+    -fx-padding: 4;
+
+    /*-fx-padding: 0.083333em 0.5em 0.083333em 0.5em;*/
+}
+
+.tab-label Text {
+    -fx-effect: dropshadow(two-pass-box, rgba(255, 255, 255, 0.4), 1, 0.0, 0, 1);
+    -fx-padding: 0;
+}
+
+.tab-content-area {
+    -fx-background-color: #141313;
+
+    /* -fx-opacity: -fx-disabled-opacity;*/
+}
+
+.tab:top {
+    -fx-background-color: #141313;
+    /*-fx-background-color: -fx-tab-border-color, -fx-inner-border, -fx-body-color;*/
+}
+
+.tab:right {
+    -fx-background-color: #141313;
+    /*-fx-background-color: -fx-tab-border-color, -fx-inner-border-bottomup, -fx-body-color-bottomup;*/
+}
+
+.tab:bottom {
+    -fx-background-color: #141313;
+    /*-fx-background-color: -fx-tab-border-color, -fx-inner-border-bottomup, -fx-body-color-bottomup;*/
+}
+
+.tab:left {
+    -fx-background-color: #141313;
+    /*-fx-background-color: -fx-tab-border-color, -fx-inner-border, -fx-body-color;*/
+}
+
+.tab:hover {
+    -fx-color: #1B1B1B;
+    -fx-background-color: #141313;
+}
+
+.tab:selected {
+    -fx-color: #1B1B1B;
+    -fx-background-color: #1B1B1B;
+}
+
+.tab-header-background {
+    -fx-background-color: #141313;
+}
+
+.tab-selected-line {
+    -fx-background-color: #5A1155;
+}
+
