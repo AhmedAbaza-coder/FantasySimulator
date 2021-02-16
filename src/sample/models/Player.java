@@ -194,5 +194,21 @@ public class Player {
         return club;
     }
 
+    public void goal_inc()
+    {
+        this.goals++;
+    }
+    public void inc_point(int x)
+    {
+        this.points += x;
+    }
 
+    public void ass_inc()
+    {
+        this.assists++;
+    }
+    public void inc_cleansheet()
+    {
+        this.cleanSheet++;
+    }
 }

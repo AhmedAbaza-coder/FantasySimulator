@@ -268,5 +268,21 @@ public class AppDatabase implements DAO {
             throwables.printStackTrace();
         }
     }
+    public void update_player(Player gg)
+    {
+        String sql = "UPDATE PLAYERS SET goals = ? , assists= ? , cleansheet=? , points = ? WHERE playerpicid=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt (1, gg.getGoals());
+            statement.setInt(2, gg.getAssists());
+            statement.setInt (3, gg.getCleanSheet());
+            statement.setInt (4, gg.getPoints());
+            statement.setString (5, gg.getPictureId());
+            set = statement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 }
 
