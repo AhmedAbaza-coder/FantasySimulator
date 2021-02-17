@@ -96,8 +96,7 @@ AppDatabase database = AppDatabase.getInstance();
         List<Player> team1_players = AppDatabase.getInstance().getPlayersByClub(team1_selected);
         List<Player> team2_players = AppDatabase.getInstance().getPlayersByClub(team2_selected);
 
-        System.out.println("Team 1"+team1_players);
-        System.out.println("\n\nTeam 2"+team2_players);
+
        ////  Points for team 1
 
         for (int i = 0; i < res_team_1; i++)
@@ -158,7 +157,7 @@ AppDatabase database = AppDatabase.getInstance();
             ASS.inc_point(ass_points);
 
             ASS.ass_inc();
-            System.out.println(ASS.getFullName());
+
 
         }
         //////  Clean Sheet
@@ -171,8 +170,7 @@ AppDatabase database = AppDatabase.getInstance();
             }
 
         }
-        System.out.println("Team 1"+team1_players);
-        System.out.println("\n\nTeam 2"+team2_players);
+
         team1_goals.setText(team1_string);
         team2_goals.setText(team2_string);
         System.out.println(team1_string);
