@@ -2,6 +2,7 @@
   <library name="ojdbc6">
     <CLASSES>
       <root url="jar://D:/Programs/Programming/JAVA/ojdbc6.jar!/" />
+      <root url="jar://F:/College/project/Fantasy/Java/ojdbc6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

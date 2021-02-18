@@ -81,3 +81,34 @@
     -fx-background-color: #5A1155;
 }
 
+.backgroundImg{
+    -fx-background-image:url('../Images/BG.png');
+    -fx-background-position: center center;
+    -fx-background-size: 100% 100%;
+    -fx-background-color:transparent;
+}
+
+/**ComboBox**/
+.combo-box .arrow{
+    -fx-background-color:#8d2887;
+}
+.combo-box .arrow-button{
+    -fx-background-color:#8d2887;
+    -fx-border-style:none;
+}
+.combo-box .arrow-button{
+    -fx-background-color:#1B1B1B;
+}
+.combo-box .list-cell{
+    -fx-background-color:#1B1B1B;
+    -fx-font-family: "Premier Sans";
+    -fx-font-size:25.0px;
+}
+.combo-box .list-view {
+    -fx-background-color:#1B1B1B;
+}
+.combo-box .list-cell:filled:selected{
+    -fx-text-fill: white;
+}
+/**/
+
