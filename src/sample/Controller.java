@@ -30,9 +30,9 @@ public class Controller implements Initializable {
     match_points MP = new match_points();
     String team1_selected, team2_selected;
     boolean getscore = false;
-    String team1_string = " ", team2_string = " ";
+    String team1_string_goals = " ", team2_string_goals = " ";
     AppDatabase database = AppDatabase.getInstance();
-
+String team1_string_assisst="",team2_string_assisst="";
     @FXML
     private JFXButton start_button;
 
@@ -49,6 +49,15 @@ public class Controller implements Initializable {
 
     @FXML
     private ImageView team1logo, team2logo;
+
+    @FXML
+    private Label team1_assisst;
+
+    @FXML
+    private Label team2_assisst;
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -249,9 +258,9 @@ public class Controller implements Initializable {
             int player_index = result.random_int();
             int assist_index = result.random_int();
             Player player = team1_players.get(player_index);
-            Player ASS = team1_players.get(assist_index);
+            Player assisst = team1_players.get(assist_index);
 
-            team1_string += player.getFullName() + "\n";
+            team1_string_goals += player.getFullName() + "\n";
 
             ////////////// goal
 
@@ -262,9 +271,10 @@ public class Controller implements Initializable {
 
             /////////           ASSIST
 
-            int ass_points = MP.match_ass(ASS.getPosition());
-            ASS.inc_point(ass_points);
-            ASS.ass_inc();
+            int ass_points = MP.match_ass(assisst.getPosition());
+            assisst.inc_point(ass_points);
+            assisst.ass_inc();
+            team1_string_assisst += assisst.getFullName() + "\n";
 
         }       //////  Clean Sheet
         if (res_team_2 == 0) {
@@ -283,9 +293,9 @@ public class Controller implements Initializable {
             int player_index = result.random_int();
             int assist_index = result.random_int();
             Player player = team2_players.get(player_index);
-            Player ASS = team2_players.get(assist_index);
+            Player assisst = team2_players.get(assist_index);
 
-            team2_string += player.getFullName() + "\n";
+            team2_string_goals += player.getFullName() + "\n";
             ///////////     goal
 
             player.goal_inc();
@@ -294,10 +304,10 @@ public class Controller implements Initializable {
 
             //database.update_player(player);
             /////////           ASSIST
-            int ass_points = MP.match_ass(ASS.getPosition());
-            ASS.inc_point(ass_points);
-
-            ASS.ass_inc();
+            int ass_points = MP.match_ass(assisst.getPosition());
+            assisst.inc_point(ass_points);
+            team2_string_assisst += assisst.getFullName() + "\n";
+            assisst.ass_inc();
 
 
         }
@@ -310,10 +320,15 @@ public class Controller implements Initializable {
 
         }
 
-        team1_goals.setText(team1_string);
-        team2_goals.setText(team2_string);
-        System.out.println(team1_string);
-        System.out.println(team2_string);
+        team1_goals.setText(team1_string_goals);
+        team2_goals.setText(team2_string_goals);
+        team1_assisst.setText(team1_string_assisst);
+        team2_assisst.setText(team2_string_assisst);
+
+
+        System.out.println(team1_string_goals);
+        System.out.println(team2_string_goals);
+
         team1_goals.setVisible(true);
         team2_goals.setVisible(true);
         team_score_1.setVisible(true);
