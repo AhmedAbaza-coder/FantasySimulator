@@ -344,24 +344,27 @@ public class Controller implements Initializable {
 
         System.out.println("ss 1  :  " + team1_players.size());
         System.out.println("ss 2  :  " + team1_players.size());
-        team1_players = team1_players.stream().filter(player -> {
-            for (SelectedPlayer selected : selectedPlayers) {
-                if (player.getPictureId().equalsIgnoreCase(selected.getPlayerName())) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
 
-        team2_players = team2_players.stream().filter(player -> {
-            for (SelectedPlayer selected : selectedPlayers) {
-                if (player.getPictureId().equalsIgnoreCase(selected.getPlayerName())) {
-                    return true;
+        if (selectedPlayers.size() != 0) {
+            team1_players = team1_players.stream().filter(player -> {
+                for (SelectedPlayer selected : selectedPlayers) {
+                    if (player.getPictureId().equalsIgnoreCase(selected.getPlayerName())) {
+                        return true;
+                    }
                 }
-            }
-            return false;
-        }).collect(Collectors.toList());
+                return false;
+            }).collect(Collectors.toList());
 
+            team2_players = team2_players.stream().filter(player -> {
+                for (SelectedPlayer selected : selectedPlayers) {
+                    if (player.getPictureId().equalsIgnoreCase(selected.getPlayerName())) {
+                        return true;
+                    }
+                }
+                return false;
+            }).collect(Collectors.toList());
+
+        }
         System.out.println("ss 1  :  " + team1_players.size() + team1_players);
         System.out.println("ss 2  :  " + team2_players.size() + team2_players);
 
@@ -373,7 +376,7 @@ public class Controller implements Initializable {
         }
 
         updateUsersPoints(selectedPlayers);
-        insertMatch(new Match(team1_selected,team2_selected,res_team_1 + " - " + res_team_2));
+        insertMatch(new Match(team1_selected, team2_selected, res_team_1 + " - " + res_team_2));
     }
 
     private void insertMatch(Match match) {
