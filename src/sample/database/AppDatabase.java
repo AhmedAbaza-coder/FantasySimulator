@@ -1,6 +1,7 @@
 package sample.database;
 
 import sample.models.Club;
+import sample.models.Match;
 import sample.models.Player;
 import sample.models.SelectedPlayer;
 import sample.models.User;
@@ -37,18 +38,18 @@ public class AppDatabase implements DAO {
         return sInstance;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
-
-    public void closeConnection() {
-        try {
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public Connection getConnection() {
+//        return connection;
+//    }
+//
+//
+//    public void closeConnection() {
+//        try {
+//            connection.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /*
         DAO
@@ -93,21 +94,7 @@ public class AppDatabase implements DAO {
         return user;
     }
 
-    /*
-     List<String> strings = new ArrayList<>();
-        try {
-            String sql = "select * from yahood";
-            sSet = sStatement.executeQuery(sql);
-            while (sSet.next()) {
-                strings.add(sSet.getInt(1) + "  " + sSet.getString(2));
 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return strings;
-     */
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -319,5 +306,20 @@ public class AppDatabase implements DAO {
             throwables.printStackTrace();
         }
     }
+
+    public void insertMatch(Match match){
+        String sql = "INSERT INTO matches (team1, team2, result) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, match.getTeam1());
+            statement.setString(2, match.getTeam2());
+            statement.setString(3, match.getResult());
+            ResultSet set = statement.executeQuery();
+            set.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }
 

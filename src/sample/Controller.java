@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import sample.database.AppDatabase;
+import sample.models.Match;
 import sample.models.Player;
 import sample.models.SelectedPlayer;
 
@@ -329,7 +330,7 @@ public class Controller implements Initializable {
         team1_assisst.setText(team1_string_assisst);
         team2_assisst.setText(team2_string_assisst);
 
-
+        //TODO
         System.out.println(team1_string_goals);
         System.out.println(team2_string_goals);
 
@@ -371,6 +372,16 @@ public class Controller implements Initializable {
             database.update_player(save);
         }
 
+        updateUsersPoints(selectedPlayers);
+        insertMatch(new Match(team1_selected,team2_selected,res_team_1 + " - " + res_team_2));
+    }
+
+    private void insertMatch(Match match) {
+        AppDatabase.getInstance().insertMatch(match);
+        System.out.println(match);
+    }
+
+    private void updateUsersPoints(List<SelectedPlayer> selectedPlayers) {
         Map<String, Integer> userToPlayers =
                 selectedPlayers.stream().collect(
                         Collectors.groupingBy(SelectedPlayer::getUsername, Collectors.summingInt(SelectedPlayer::getPoints)));
