@@ -2,6 +2,7 @@ package sample.database;
 
 import sample.models.Club;
 import sample.models.Player;
+import sample.models.SelectedPlayer;
 import sample.models.User;
 
 import java.sql.*;
@@ -256,7 +257,7 @@ public class AppDatabase implements DAO {
 
     }
 
-    public void confirmSquadName(String username, String squadName){
+    public void confirmSquadName(String username, String squadName) {
 
         String sql = "UPDATE users SET squadname = ? WHERE email = ?";
         try {
@@ -268,21 +269,55 @@ public class AppDatabase implements DAO {
             throwables.printStackTrace();
         }
     }
-    public void update_player(Player gg)
-    {
+
+    public List<SelectedPlayer> getSelectedPlayers() {
+        List<SelectedPlayer> players = new ArrayList<>();
+
+        String sql = "select selectedplayers.* , players.points from selectedplayers, players where playername = playerpicid";
+
+        try {
+            Statement statement = connection.createStatement();
+            set = statement.executeQuery(sql);
+            while (set.next()) {
+                boolean isCaptain = set.getString("CAPTAIN").equalsIgnoreCase("TRUE") ? true : false;
+                boolean isStarting = set.getString("STARTING").equalsIgnoreCase("TRUE") ? true : false;
+                SelectedPlayer selectedPlayer = new SelectedPlayer(set.getString("USERNAME"), set.getString("PLAYERNAME")
+                        , isStarting, isCaptain, set.getInt("POINTS"));
+                players.add(selectedPlayer);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return players;
+    }
+
+    public void update_player(Player gg) {
         String sql = "UPDATE PLAYERS SET goals = ? , assists= ? , cleansheet=? , points = ? WHERE playerpicid=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt (1, gg.getGoals());
+            statement.setInt(1, gg.getGoals());
             statement.setInt(2, gg.getAssists());
-            statement.setInt (3, gg.getCleanSheet());
-            statement.setInt (4, gg.getPoints());
-            statement.setString (5, gg.getPictureId());
+            statement.setInt(3, gg.getCleanSheet());
+            statement.setInt(4, gg.getPoints());
+            statement.setString(5, gg.getPictureId());
             set = statement.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+    }
+
+    public void updateUserPoints(String username, int points){
+        String sql = "UPDATE USERS SET points = ? WHERE email =?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, points);
+            statement.setString(2, username);
+
+            set = statement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 package sample;
 
 import com.jfoenix.controls.*;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,17 +15,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import sample.database.AppDatabase;
 import sample.models.Player;
+import sample.models.SelectedPlayer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 
 public class Controller implements Initializable {
+
     int res_team_1, res_team_2;
     team_result result = new team_result();
     match_points MP = new match_points();
@@ -32,7 +36,8 @@ public class Controller implements Initializable {
     boolean getscore = false;
     String team1_string_goals = " ", team2_string_goals = " ";
     AppDatabase database = AppDatabase.getInstance();
-String team1_string_assisst="",team2_string_assisst="";
+    String team1_string_assisst = "", team2_string_assisst = "";
+
     @FXML
     private JFXButton start_button;
 
@@ -55,8 +60,6 @@ String team1_string_assisst="",team2_string_assisst="";
 
     @FXML
     private Label team2_assisst;
-
-
 
 
     @Override
@@ -233,6 +236,7 @@ String team1_string_assisst="",team2_string_assisst="";
     }
 
 
+    @FXML
     public void start_handle() {
 
         start_button.setDisable(true);
@@ -258,7 +262,7 @@ String team1_string_assisst="",team2_string_assisst="";
             int player_index = result.random_int();
             int assist_index = result.random_int();
             Player player = team1_players.get(player_index);
-            Player assisst = team1_players.get(assist_index);
+            Player assist = team1_players.get(assist_index);
 
             team1_string_goals += player.getFullName() + "\n";
 
@@ -271,10 +275,10 @@ String team1_string_assisst="",team2_string_assisst="";
 
             /////////           ASSIST
 
-            int ass_points = MP.match_ass(assisst.getPosition());
-            assisst.inc_point(ass_points);
-            assisst.ass_inc();
-            team1_string_assisst += assisst.getFullName() + "\n";
+            int ass_points = MP.match_ass(assist.getPosition());
+            assist.inc_point(ass_points);
+            assist.ass_inc();
+            team1_string_assisst += assist.getFullName() + "\n";
 
         }       //////  Clean Sheet
         if (res_team_2 == 0) {
@@ -333,11 +337,46 @@ String team1_string_assisst="",team2_string_assisst="";
         team2_goals.setVisible(true);
         team_score_1.setVisible(true);
         team_score_2.setVisible(true);
+
+        List<SelectedPlayer> selectedPlayers = AppDatabase.getInstance().getSelectedPlayers();
+
+
+        System.out.println("ss 1  :  " + team1_players.size());
+        System.out.println("ss 2  :  " + team1_players.size());
+        team1_players = team1_players.stream().filter(player -> {
+            for (SelectedPlayer selected : selectedPlayers) {
+                if (player.getPictureId().equalsIgnoreCase(selected.getPlayerName())) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
+
+        team2_players = team2_players.stream().filter(player -> {
+            for (SelectedPlayer selected : selectedPlayers) {
+                if (player.getPictureId().equalsIgnoreCase(selected.getPlayerName())) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
+
+        System.out.println("ss 1  :  " + team1_players.size() + team1_players);
+        System.out.println("ss 2  :  " + team2_players.size() + team2_players);
+
         for (Player save : team1_players) {
             database.update_player(save);
         }
         for (Player save : team2_players) {
             database.update_player(save);
         }
+
+        Map<String, Integer> userToPlayers =
+                selectedPlayers.stream().collect(
+                        Collectors.groupingBy(SelectedPlayer::getUsername, Collectors.summingInt(SelectedPlayer::getPoints)));
+
+        userToPlayers.forEach((s, integer) -> {
+            AppDatabase.getInstance().updateUserPoints(s, integer);
+        });
     }
 }
