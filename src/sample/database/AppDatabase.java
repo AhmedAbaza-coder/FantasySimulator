@@ -38,18 +38,6 @@ public class AppDatabase implements DAO {
         return sInstance;
     }
 
-//    public Connection getConnection() {
-//        return connection;
-//    }
-//
-//
-//    public void closeConnection() {
-//        try {
-//            connection.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /*
         DAO
@@ -219,7 +207,6 @@ public class AppDatabase implements DAO {
                         set.getInt(8), set.getInt(9), set.getInt(10), set.getInt(11),
                         set.getInt(12), set.getFloat(13), selection, set.getString(14));
 
-//                player.setClubObject(set.getString(14));
                 players.add(player);
             }
         } catch (SQLException throwables) {
